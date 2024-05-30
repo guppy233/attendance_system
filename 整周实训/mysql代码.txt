@@ -1,0 +1,21 @@
+CREATE DATABASE attendance;  //创建数据库
+
+USE attendance; //使用数据库
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(50) NOT NULL
+); //创建用户表并定义数据
+
+CREATE TABLE records (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    sign_in_time DATETIME,
+    sign_out_time DATETIME,
+    is_late BOOLEAN,
+    is_early BOOLEAN,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+); //创建记录表并定义数据
+ALTER TABLE users ADD COLUMN is_root BOOLEAN DEFAULT FALSE; // 在用户表添加一行用于辨别root用户的数据
+INSERT INTO users (username, password, is_root) VALUES ('root', 'root', TRUE); // 在用户表插入一行用户名和密码的root用户
